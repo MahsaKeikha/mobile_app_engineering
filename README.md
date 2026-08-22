@@ -1,26 +1,35 @@
 # F41 Mobile App Engineering
 
-Standalone multi-agent reference implementation for mobile product architecture, client engineering, API integration, testing, release readiness, and observability.
+**Maturity:** L3 Gold Standard candidate  
+**Version:** 1.0.0
 
-## Direct agent links
+A multi-agent reference system for mobile application engineering and release governance across architecture, client implementation, API integration, QA, and release readiness.
 
-- [Mobile Architecture Agent](AGENTS/mobile_architecture_agent.py)
-- [Client Engineering Agent](AGENTS/client_engineering_agent.py)
-- [API Integration Agent](AGENTS/api_integration_agent.py)
-- [Mobile QA Agent](AGENTS/mobile_qa_agent.py)
-- [Release Agent](AGENTS/release_agent.py)
+## Release governance
 
-## Core implementation
+F41 fails closed when API authentication is undefined, tests fail, release blockers remain, supported-OS coverage is missing, the device matrix is incomplete, accessibility/security/privacy review is incomplete, crash-free reliability is below target, startup performance exceeds budget, offline behavior is undefined, rollback is untested, or unresolved conflicts/questions remain. Human approval is required after automated gates pass and cannot override blockers.
 
-- [All agents](AGENTS/)
-- [All tools](TOOLS/)
-- [All skills](SKILLS/)
-- [Orchestration](orchestration/)
-- [Tests](tests/)
-
-## Execution
+## Reproduce
 
 ```bash
-python run.py
+python -m pip install -e '.[dev]'
+ruff check .
 pytest -q
+python benchmarks/heldout_suite.py
+python examples/minimal.py
+python examples/complete.py
+python run.py
 ```
+
+CI validates Python 3.10, 3.11, and 3.12 and publishes held-out results from Python 3.12.
+
+## Architecture
+
+1. Mobile Architecture Agent defines platform/module architecture.
+2. Client Engineering Agent tracks features and technical debt.
+3. API Integration Agent validates endpoint authentication contracts.
+4. Mobile QA Agent surfaces test failures.
+5. Release Agent surfaces release blockers.
+6. The orchestrator applies cross-cutting reliability, performance, accessibility, privacy, security, offline, rollback, and human-approval gates.
+
+L3 denotes an independently reviewable and reproducible reference implementation. It does not replace platform-specific security review, App Store/Play policy review, device testing, or production release authority.

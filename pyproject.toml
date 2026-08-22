@@ -4,9 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mobile-app-engineering"
-version = "0.1.0"
+version = "1.0.0"
+description = "L3 reference multi-agent system for mobile application engineering and release governance"
 requires-python = ">=3.10"
+authors = [{name = "Mahsa Keikha"}]
+license = {text = "MIT"}
+readme = "README.md"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
